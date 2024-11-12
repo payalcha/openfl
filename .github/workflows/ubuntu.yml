@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FQDN: "localhost"
+
 jobs:
   lint: # from lint.yml
     runs-on: ubuntu-latest
@@ -27,8 +30,6 @@ jobs:
   pytest-coverage: # from pytest_coverage.yml
     needs: lint
     runs-on: ubuntu-latest
-    env:
-      FQDN: "localhost"
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.8
