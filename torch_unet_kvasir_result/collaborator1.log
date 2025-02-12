@@ -1,0 +1,265 @@
+2025-02-12 15:05:37.495159: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:477] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739372737.512885   82992 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1739372737.519153   82992 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-02-12 15:05:37.544310: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/home/azureuser/openfl-quickstart/lib/python3.10/site-packages/_distutils_hack/__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+[15:05:42] INFO     FL-Plan hash is 18a06978d0ebcdf0cfba888b79e3f0289b2f66e5c26520affb1f35f7b1c3fcec840160ae226b4a4686f5ba5fab926920                 plan.py:297
+           INFO     Parsing Federated Learning Plan : SUCCESS :                                                                                      plan.py:145
+                    /home/azureuser/results/test_federation_via_native/torch_unet_kvasir/collaborator1/workspace/plan/plan.yaml.                                
+           INFO     aggregator:                                                                                                                      plan.py:150
+                      settings:                                                                                                                                 
+                        best_state_path: save/best.pbuf                                                                                                         
+                        db_store_rounds: 2                                                                                                                      
+                        init_state_path: save/init.pbuf                                                                                                         
+                        last_state_path: save/last.pbuf                                                                                                         
+                        log_memory_usage: false                                                                                                                 
+                        persist_checkpoint: true                                                                                                                
+                        persistent_db_path: local_state/tensor.db                                                                                               
+                        rounds_to_train: 2                                                                                                                      
+                        write_logs: true                                                                                                                        
+                      template: openfl.component.Aggregator                                                                                                     
+                    assigner:                                                                                                                                   
+                      settings:                                                                                                                                 
+                        task_groups:                                                                                                                            
+                        - name: learning                                                                                                                        
+                          percentage: 1.0                                                                                                                       
+                          tasks:                                                                                                                                
+                          - aggregated_model_validation                                                                                                         
+                          - train                                                                                                                               
+                          - locally_tuned_model_validation                                                                                                      
+                        - name: evaluation                                                                                                                      
+                          percentage: 0                                                                                                                         
+                          tasks:                                                                                                                                
+                          - aggregated_model_validation                                                                                                         
+                      template: openfl.component.RandomGroupedAssigner                                                                                          
+                    collaborator:                                                                                                                               
+                      settings:                                                                                                                                 
+                        db_store_rounds: 1                                                                                                                      
+                        delta_updates: false                                                                                                                    
+                        log_memory_usage: false                                                                                                                 
+                        opt_treatment: RESET                                                                                                                    
+                        write_logs: true                                                                                                                        
+                      template: openfl.component.Collaborator                                                                                                   
+                    compression_pipeline:                                                                                                                       
+                      settings: {}                                                                                                                              
+                      template: openfl.pipelines.NoCompressionPipeline                                                                                          
+                    data_loader:                                                                                                                                
+                      settings:                                                                                                                                 
+                        batch_size: 4                                                                                                                           
+                        collaborator_count: 2                                                                                                                   
+                        data_group_name: kvasir                                                                                                                 
+                      template: src.dataloader.PyTorchKvasirDataLoader                                                                                          
+                    network:                                                                                                                                    
+                      settings:                                                                                                                                 
+                        agg_addr: localhost                                                                                                                     
+                        agg_port: 60295                                                                                                                         
+                        cert_folder: cert                                                                                                                       
+                        client_reconnect_interval: 5                                                                                                            
+                        hash_salt: auto                                                                                                                         
+                        require_client_auth: true                                                                                                               
+                        use_tls: true                                                                                                                           
+                      template: openfl.federation.Network                                                                                                       
+                    task_runner:                                                                                                                                
+                      settings:                                                                                                                                 
+                        n_channels: 3                                                                                                                           
+                        n_classes: 1                                                                                                                            
+                      template: src.taskrunner.PyTorchFederatedUnet                                                                                             
+                    tasks:                                                                                                                                      
+                      aggregated_model_validation:                                                                                                              
+                        function: validate_task                                                                                                                 
+                        kwargs:                                                                                                                                 
+                          apply: global                                                                                                                         
+                          metrics:                                                                                                                              
+                          - dice_coef                                                                                                                           
+                      locally_tuned_model_validation:                                                                                                           
+                        function: validate_task                                                                                                                 
+                        kwargs:                                                                                                                                 
+                          apply: local                                                                                                                          
+                          metrics:                                                                                                                              
+                          - dice_coef                                                                                                                           
+                      settings: {}                                                                                                                              
+                      train:                                                                                                                                    
+                        function: train_task                                                                                                                    
+                        kwargs:                                                                                                                                 
+                          epochs: 1                                                                                                                             
+                          metrics:                                                                                                                              
+                          - loss                                                                                                                                
+                                                                                                                                                                
+Data = {'one': '1', 'two': '2', 'collaborator1': '1'}
+           INFO     🧿 Starting a Collaborator Service.                                                                                       collaborator.py:85
+           INFO     Building `src.dataloader.PyTorchKvasirDataLoader` Module.                                                                        plan.py:236
+Downloading https://datasets.simula.no/downloads/hyper-kvasir/hyper-kvasir-segmented-images.zip to /home/azureuser/results/test_federation_via_native/torch_unet_kvasir/collaborator1/workspace/data/kvasir.zip
+  0%|          | 0/46179365 [00:00<?, ?it/s]  0%|          | 32768/46179365 [00:00<02:59, 256777.17it/s]  0%|          | 98304/46179365 [00:00<02:01, 380512.29it/s]  1%|          | 425984/46179365 [00:00<00:34, 1314766.54it/s]  2%|▏         | 917504/46179365 [00:00<00:20, 2187582.88it/s]  6%|▌         | 2686976/46179365 [00:00<00:06, 6686180.19it/s] 12%|█▏        | 5505024/46179365 [00:00<00:03, 12966656.31it/s] 15%|█▌        | 7012352/46179365 [00:00<00:02, 13519038.71it/s] 25%|██▍       | 11370496/46179365 [00:00<00:01, 21859109.88it/s] 33%|███▎      | 15204352/46179365 [00:01<00:01, 23460712.79it/s] 41%|████      | 18776064/46179365 [00:01<00:01, 26711979.47it/s] 47%|████▋     | 21528576/46179365 [00:01<00:00, 26885835.60it/s] 57%|█████▋    | 26345472/46179365 [00:01<00:00, 32902895.38it/s] 65%|██████▌   | 30081024/46179365 [00:01<00:00, 34163985.61it/s] 73%|███████▎  | 33587200/46179365 [00:01<00:00, 34395239.15it/s] 80%|████████  | 37093376/46179365 [00:01<00:00, 31657877.79it/s] 90%|████████▉ | 41353216/46179365 [00:01<00:00, 34658263.77it/s] 98%|█████████▊| 45056000/46179365 [00:01<00:00, 35329643.58it/s]100%|██████████| 46179365/46179365 [00:01<00:00, 23627827.26it/s]
+Unzipping dataset:   0%|          | 0/2004 [00:00<?, ?it/s]Unzipping dataset:   3%|▎         | 69/2004 [00:00<00:02, 689.45it/s]Unzipping dataset:  10%|▉         | 191/2004 [00:00<00:01, 996.46it/s]Unzipping dataset:  15%|█▍        | 291/2004 [00:00<00:02, 724.37it/s]Unzipping dataset:  19%|█▉        | 378/2004 [00:00<00:02, 769.76it/s]Unzipping dataset:  23%|██▎       | 467/2004 [00:00<00:01, 806.53it/s]Unzipping dataset:  30%|██▉       | 601/2004 [00:00<00:01, 969.46it/s]Unzipping dataset:  35%|███▌      | 702/2004 [00:00<00:01, 938.32it/s]Unzipping dataset:  40%|███▉      | 799/2004 [00:00<00:01, 882.35it/s]Unzipping dataset:  46%|████▌     | 925/2004 [00:01<00:01, 988.00it/s]Unzipping dataset:  54%|█████▍    | 1090/2004 [00:01<00:00, 1176.75it/s]Unzipping dataset:  61%|██████    | 1226/2004 [00:01<00:00, 1228.78it/s]Unzipping dataset:  67%|██████▋   | 1352/2004 [00:01<00:00, 1170.76it/s]Unzipping dataset:  75%|███████▍  | 1500/2004 [00:01<00:00, 1256.58it/s]Unzipping dataset:  85%|████████▌ | 1711/2004 [00:01<00:00, 1501.18it/s]Unzipping dataset:  93%|█████████▎| 1864/2004 [00:01<00:00, 1499.99it/s]Unzipping dataset: 100%|██████████| 2004/2004 [00:01<00:00, 1134.15it/s]
+[15:05:49] INFO     Building `src.taskrunner.PyTorchFederatedUnet` Module.                                                                           plan.py:236
+PyTorchFederatedUnet(
+  (inc): DoubleConv(
+    (conv): Sequential(
+      (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (down1): Down(
+    (mpconv): Sequential(
+      (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (conv): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (down2): Down(
+    (mpconv): Sequential(
+      (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (conv): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (down3): Down(
+    (mpconv): Sequential(
+      (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (conv): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (down4): Down(
+    (mpconv): Sequential(
+      (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): DoubleConv(
+        (conv): Sequential(
+          (0): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (4): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+        )
+      )
+    )
+  )
+  (up1): Up(
+    (up): ConvTranspose2d(1024, 512, kernel_size=(2, 2), stride=(2, 2))
+    (conv): DoubleConv(
+      (conv): Sequential(
+        (0): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (up2): Up(
+    (up): ConvTranspose2d(512, 256, kernel_size=(2, 2), stride=(2, 2))
+    (conv): DoubleConv(
+      (conv): Sequential(
+        (0): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (up3): Up(
+    (up): ConvTranspose2d(256, 128, kernel_size=(2, 2), stride=(2, 2))
+    (conv): DoubleConv(
+      (conv): Sequential(
+        (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (up4): Up(
+    (up): ConvTranspose2d(128, 64, kernel_size=(2, 2), stride=(2, 2))
+    (conv): DoubleConv(
+      (conv): Sequential(
+        (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+  )
+  (outc): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+)
+[15:05:50] WARNING  tried to remove tensor: __opt_state_needed not present in the tensor dict                                                        split.py:94
+           WARNING  tried to remove tensor: __opt_state_needed not present in the tensor dict                                                        split.py:94
+           INFO     Building `openfl.pipelines.NoCompressionPipeline` Module.                                                                        plan.py:236
+           INFO     Building `openfl.component.Collaborator` Module.                                                                                 plan.py:236
+           INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+           INFO     Received Tasks: [name: "aggregated_model_validation"                                                                     collaborator.py:184
+                    , name: "train"                                                                                                                             
+                    , name: "locally_tuned_model_validation"                                                                                                    
+                    ]                                                                                                                                           
+validate:   0%|          | 0/16 [00:00<?, ?it/s]/home/azureuser/results/test_federation_via_native/torch_unet_kvasir/collaborator1/workspace/src/taskrunner.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  data, target = torch.tensor(data).to(self.device), torch.tensor(
+validate:   6%|▋         | 1/16 [00:04<01:06,  4.42s/it]validate:  12%|█▎        | 2/16 [00:09<01:06,  4.72s/it]validate:  19%|█▉        | 3/16 [00:13<01:00,  4.64s/it]validate:  25%|██▌       | 4/16 [00:18<00:54,  4.56s/it]validate:  31%|███▏      | 5/16 [00:22<00:50,  4.55s/it]validate:  38%|███▊      | 6/16 [00:27<00:44,  4.48s/it]validate:  44%|████▍     | 7/16 [00:31<00:40,  4.55s/it]validate:  50%|█████     | 8/16 [00:36<00:36,  4.54s/it]validate:  56%|█████▋    | 9/16 [00:40<00:31,  4.51s/it]validate:  62%|██████▎   | 10/16 [00:45<00:27,  4.55s/it]validate:  69%|██████▉   | 11/16 [00:49<00:22,  4.50s/it]validate:  75%|███████▌  | 12/16 [00:54<00:18,  4.55s/it]validate:  81%|████████▏ | 13/16 [00:59<00:13,  4.62s/it]validate:  88%|████████▊ | 14/16 [01:03<00:09,  4.59s/it]validate:  94%|█████████▍| 15/16 [01:08<00:04,  4.64s/it]validate: 100%|██████████| 16/16 [01:11<00:00,  4.02s/it]validate: 100%|██████████| 16/16 [01:11<00:00,  4.45s/it]
+[15:07:09] INFO     Run 0 epoch of 0 round                                                                                                      runner_pt.py:161
+/home/azureuser/payalcha_openfl/openfl/federated/task/runner_pt.py:478: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  data, target = torch.tensor(data).to(self.device), torch.tensor(target).to(self.device)
+validate:   0%|          | 0/16 [00:00<?, ?it/s]validate:   6%|▋         | 1/16 [00:03<00:56,  3.80s/it]validate:  12%|█▎        | 2/16 [00:08<00:56,  4.04s/it]validate:  19%|█▉        | 3/16 [00:12<00:54,  4.18s/it]validate:  25%|██▌       | 4/16 [00:16<00:49,  4.16s/it]validate:  31%|███▏      | 5/16 [00:20<00:46,  4.21s/it]validate:  38%|███▊      | 6/16 [00:24<00:41,  4.16s/it]validate:  44%|████▍     | 7/16 [00:29<00:37,  4.17s/it]validate:  50%|█████     | 8/16 [00:33<00:33,  4.18s/it]validate:  56%|█████▋    | 9/16 [00:37<00:29,  4.15s/it]validate:  62%|██████▎   | 10/16 [00:41<00:24,  4.14s/it]validate:  69%|██████▉   | 11/16 [00:45<00:21,  4.25s/it]validate:  75%|███████▌  | 12/16 [00:50<00:16,  4.20s/it]validate:  81%|████████▏ | 13/16 [00:54<00:12,  4.18s/it]validate:  88%|████████▊ | 14/16 [00:58<00:08,  4.16s/it]validate:  94%|█████████▍| 15/16 [01:02<00:04,  4.11s/it]validate: 100%|██████████| 16/16 [01:05<00:00,  3.71s/it]validate: 100%|██████████| 16/16 [01:05<00:00,  4.07s/it]
+[15:33:02] INFO     Round 0: Metrics: {'collaborator1/aggregated_model_validation/dice_coef': 0.22384400809964827,                           metric_writer.py:52
+                    'collaborator1/train/soft_dice_loss': 0.6329683661460876, 'collaborator1/locally_tuned_model_validation/dice_coef':                         
+                    0.39386453455494297}                                                                                                                        
+           INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+[15:33:13] INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+[15:33:23] INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+[15:33:33] INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+[15:33:43] INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+[15:33:54] INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+           INFO     Received Tasks: [name: "aggregated_model_validation"                                                                     collaborator.py:184
+                    , name: "train"                                                                                                                             
+                    , name: "locally_tuned_model_validation"                                                                                                    
+                    ]                                                                                                                                           
+validate:   0%|          | 0/16 [00:00<?, ?it/s]/home/azureuser/results/test_federation_via_native/torch_unet_kvasir/collaborator1/workspace/src/taskrunner.py:119: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  data, target = torch.tensor(data).to(self.device), torch.tensor(
+validate:   6%|▋         | 1/16 [00:03<00:58,  3.93s/it]validate:  12%|█▎        | 2/16 [00:08<00:57,  4.09s/it]validate:  19%|█▉        | 3/16 [00:12<00:55,  4.25s/it]validate:  25%|██▌       | 4/16 [00:16<00:50,  4.24s/it]validate:  31%|███▏      | 5/16 [00:21<00:46,  4.26s/it]validate:  38%|███▊      | 6/16 [00:25<00:42,  4.28s/it]validate:  44%|████▍     | 7/16 [00:29<00:37,  4.22s/it]validate:  50%|█████     | 8/16 [00:33<00:33,  4.19s/it]validate:  56%|█████▋    | 9/16 [00:37<00:28,  4.05s/it]validate:  62%|██████▎   | 10/16 [00:41<00:24,  4.11s/it]validate:  69%|██████▉   | 11/16 [00:45<00:20,  4.11s/it]validate:  75%|███████▌  | 12/16 [00:49<00:16,  4.08s/it]validate:  81%|████████▏ | 13/16 [00:53<00:12,  4.06s/it]validate:  88%|████████▊ | 14/16 [00:57<00:07,  3.96s/it]validate:  94%|█████████▍| 15/16 [01:02<00:04,  4.13s/it]validate: 100%|██████████| 16/16 [01:04<00:00,  3.68s/it]validate: 100%|██████████| 16/16 [01:04<00:00,  4.04s/it]
+[15:35:08] INFO     Run 0 epoch of 1 round                                                                                                      runner_pt.py:161
+/home/azureuser/payalcha_openfl/openfl/federated/task/runner_pt.py:478: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  data, target = torch.tensor(data).to(self.device), torch.tensor(target).to(self.device)
+validate:   0%|          | 0/16 [00:00<?, ?it/s]validate:   6%|▋         | 1/16 [00:04<01:00,  4.01s/it]validate:  12%|█▎        | 2/16 [00:08<00:58,  4.14s/it]validate:  19%|█▉        | 3/16 [00:12<00:53,  4.10s/it]validate:  25%|██▌       | 4/16 [00:16<00:50,  4.22s/it]validate:  31%|███▏      | 5/16 [00:20<00:45,  4.17s/it]validate:  38%|███▊      | 6/16 [00:25<00:42,  4.20s/it]validate:  44%|████▍     | 7/16 [00:29<00:38,  4.27s/it]validate:  50%|█████     | 8/16 [00:33<00:33,  4.18s/it]validate:  56%|█████▋    | 9/16 [00:37<00:29,  4.23s/it]validate:  62%|██████▎   | 10/16 [00:42<00:25,  4.26s/it]validate:  69%|██████▉   | 11/16 [00:46<00:21,  4.24s/it]validate:  75%|███████▌  | 12/16 [00:50<00:16,  4.20s/it]validate:  81%|████████▏ | 13/16 [00:54<00:12,  4.22s/it]validate:  88%|████████▊ | 14/16 [00:58<00:08,  4.08s/it]validate:  94%|█████████▍| 15/16 [01:01<00:03,  3.90s/it]validate: 100%|██████████| 16/16 [01:03<00:00,  3.22s/it]validate: 100%|██████████| 16/16 [01:03<00:00,  3.97s/it]
+[16:01:58] INFO     Round 1: Metrics: {'collaborator1/aggregated_model_validation/dice_coef': 0.37318285530613315,                           metric_writer.py:52
+                    'collaborator1/train/soft_dice_loss': 0.598354697227478, 'collaborator1/locally_tuned_model_validation/dice_coef':                          
+                    0.3898103342902276}                                                                                                                         
+           INFO     Waiting for tasks...                                                                                                     collaborator.py:233
+           INFO     Received shutdown signal. Exiting...                                                                                     collaborator.py:199
+
+ ✔️ OK

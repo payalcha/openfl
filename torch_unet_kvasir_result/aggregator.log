@@ -1,0 +1,141 @@
+2025-02-12 15:05:37.051770: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:477] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739372737.090055   82990 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1739372737.101712   82990 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-02-12 15:05:37.138076: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/home/azureuser/openfl-quickstart/lib/python3.10/site-packages/_distutils_hack/__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+[15:05:41] INFO     FL-Plan hash is 18a06978d0ebcdf0cfba888b79e3f0289b2f66e5c26520affb1f35f7b1c3fcec840160ae226b4a4686f5ba5fab926920                 plan.py:297
+           INFO     Parsing Federated Learning Plan : SUCCESS :                                                                                      plan.py:145
+                    /home/azureuser/results/test_federation_via_native/torch_unet_kvasir/aggregator/workspace/plan/plan.yaml.                                   
+           INFO     aggregator:                                                                                                                      plan.py:150
+                      settings:                                                                                                                                 
+                        best_state_path: save/best.pbuf                                                                                                         
+                        db_store_rounds: 2                                                                                                                      
+                        init_state_path: save/init.pbuf                                                                                                         
+                        last_state_path: save/last.pbuf                                                                                                         
+                        log_memory_usage: false                                                                                                                 
+                        persist_checkpoint: true                                                                                                                
+                        persistent_db_path: local_state/tensor.db                                                                                               
+                        rounds_to_train: 2                                                                                                                      
+                        write_logs: true                                                                                                                        
+                      template: openfl.component.Aggregator                                                                                                     
+                    assigner:                                                                                                                                   
+                      settings:                                                                                                                                 
+                        task_groups:                                                                                                                            
+                        - name: learning                                                                                                                        
+                          percentage: 1.0                                                                                                                       
+                          tasks:                                                                                                                                
+                          - aggregated_model_validation                                                                                                         
+                          - train                                                                                                                               
+                          - locally_tuned_model_validation                                                                                                      
+                        - name: evaluation                                                                                                                      
+                          percentage: 0                                                                                                                         
+                          tasks:                                                                                                                                
+                          - aggregated_model_validation                                                                                                         
+                      template: openfl.component.RandomGroupedAssigner                                                                                          
+                    collaborator:                                                                                                                               
+                      settings:                                                                                                                                 
+                        db_store_rounds: 1                                                                                                                      
+                        delta_updates: false                                                                                                                    
+                        log_memory_usage: false                                                                                                                 
+                        opt_treatment: RESET                                                                                                                    
+                        write_logs: true                                                                                                                        
+                      template: openfl.component.Collaborator                                                                                                   
+                    compression_pipeline:                                                                                                                       
+                      settings: {}                                                                                                                              
+                      template: openfl.pipelines.NoCompressionPipeline                                                                                          
+                    data_loader:                                                                                                                                
+                      settings:                                                                                                                                 
+                        batch_size: 4                                                                                                                           
+                        collaborator_count: 2                                                                                                                   
+                        data_group_name: kvasir                                                                                                                 
+                      template: src.dataloader.PyTorchKvasirDataLoader                                                                                          
+                    network:                                                                                                                                    
+                      settings:                                                                                                                                 
+                        agg_addr: localhost                                                                                                                     
+                        agg_port: 60295                                                                                                                         
+                        cert_folder: cert                                                                                                                       
+                        client_reconnect_interval: 5                                                                                                            
+                        hash_salt: auto                                                                                                                         
+                        require_client_auth: true                                                                                                               
+                        use_tls: true                                                                                                                           
+                      template: openfl.federation.Network                                                                                                       
+                    task_runner:                                                                                                                                
+                      settings:                                                                                                                                 
+                        n_channels: 3                                                                                                                           
+                        n_classes: 1                                                                                                                            
+                      template: src.taskrunner.PyTorchFederatedUnet                                                                                             
+                    tasks:                                                                                                                                      
+                      aggregated_model_validation:                                                                                                              
+                        function: validate_task                                                                                                                 
+                        kwargs:                                                                                                                                 
+                          apply: global                                                                                                                         
+                          metrics:                                                                                                                              
+                          - dice_coef                                                                                                                           
+                      locally_tuned_model_validation:                                                                                                           
+                        function: validate_task                                                                                                                 
+                        kwargs:                                                                                                                                 
+                          apply: local                                                                                                                          
+                          metrics:                                                                                                                              
+                          - dice_coef                                                                                                                           
+                      settings: {}                                                                                                                              
+                      train:                                                                                                                                    
+                        function: train_task                                                                                                                    
+                        kwargs:                                                                                                                                 
+                          epochs: 1                                                                                                                             
+                          metrics:                                                                                                                              
+                          - loss                                                                                                                                
+                                                                                                                                                                
+           INFO     🧿 Starting the Aggregator Service.                                                                                        aggregator.py:103
+           INFO     Building `openfl.component.RandomGroupedAssigner` Module.                                                                        plan.py:236
+           INFO     Building `openfl.pipelines.NoCompressionPipeline` Module.                                                                        plan.py:236
+           INFO     Importing 🡆 Object CutoffTimePolicy from openfl.component.aggregator.straggler_handling Module.                                  plan.py:260
+           INFO     Building `openfl.component.Aggregator` Module.                                                                                   plan.py:236
+           WARNING  CutoffTimePolicy is disabled as straggler_cutoff_time is set to np.inf.                                             straggler_handling.py:87
+           INFO     Persistent checkpoint is enabled, setting persistent db at path local_state/tensor.db                                      aggregator.py:147
+           INFO     Initializing persistent db at local_state/tensor.db                                                                      persistent_db.py:36
+[15:05:42] INFO     Starting Aggregator gRPC Server                                                                                     aggregator_server.py:366
+[15:05:50] INFO     Sending tasks to collaborator collaborator2 for round 0                                                                    aggregator.py:515
+           INFO     Sending tasks to collaborator collaborator1 for round 0                                                                    aggregator.py:515
+[15:07:08] INFO     Collaborator collaborator2 is sending task results for aggregated_model_validation, round 0                                aggregator.py:730
+           INFO     Collaborator collaborator1 is sending task results for aggregated_model_validation, round 0                                aggregator.py:730
+[15:31:52] INFO     Collaborator collaborator1 is sending task results for train, round 0                                                      aggregator.py:730
+[15:31:57] INFO     Collaborator collaborator2 is sending task results for train, round 0                                                      aggregator.py:730
+[15:33:02] INFO     Collaborator collaborator1 is sending task results for locally_tuned_model_validation, round 0                             aggregator.py:730
+           INFO     Round 0: Collaborators that have completed all tasks: ['collaborator1']                                                   aggregator.py:1174
+[15:33:03] INFO     Collaborator collaborator2 is sending task results for locally_tuned_model_validation, round 0                             aggregator.py:730
+           INFO     Round 0: Collaborators that have completed all tasks: ['collaborator1', 'collaborator2']                                  aggregator.py:1174
+           INFO     Round 0: saved the best model with score 0.212237                                                                         aggregator.py:1081
+[15:33:11] INFO     Round 0: Metrics: {'aggregator/aggregated_model_validation/dice_coef': 0.21223701536655426,                              metric_writer.py:52
+                    'aggregator/locally_tuned_model_validation/dice_coef': 0.3645855337381363, 'aggregator/train/soft_dice_loss':                               
+                    0.6286574751990182}                                                                                                                         
+           INFO     Saving round 0 model...                                                                                                   aggregator.py:1119
+[15:33:45] INFO     Committed model for round 0, saved 136 model tensors and 383 next round model tensors  with best_score                  persistent_db.py:220
+                    0.21223701536655426                                                                                                                         
+           INFO     Persist model and clean task result for round 0                                                                            aggregator.py:378
+[15:33:46] INFO     Starting round 1...                                                                                                       aggregator.py:1132
+           INFO     Sending tasks to collaborator collaborator2 for round 1                                                                    aggregator.py:515
+[15:33:54] INFO     Sending tasks to collaborator collaborator1 for round 1                                                                    aggregator.py:515
+[15:34:57] INFO     Collaborator collaborator2 is sending task results for aggregated_model_validation, round 1                                aggregator.py:730
+[15:35:07] INFO     Collaborator collaborator1 is sending task results for aggregated_model_validation, round 1                                aggregator.py:730
+[15:59:36] INFO     Collaborator collaborator2 is sending task results for train, round 1                                                      aggregator.py:730
+[15:59:52] INFO     Collaborator collaborator1 is sending task results for train, round 1                                                      aggregator.py:730
+[16:00:50] INFO     Collaborator collaborator2 is sending task results for locally_tuned_model_validation, round 1                             aggregator.py:730
+           INFO     Round 1: Collaborators that have completed all tasks: ['collaborator2']                                                   aggregator.py:1174
+[16:00:57] INFO     Collaborator collaborator1 is sending task results for locally_tuned_model_validation, round 1                             aggregator.py:730
+           INFO     Round 1: Collaborators that have completed all tasks: ['collaborator2', 'collaborator1']                                  aggregator.py:1174
+           INFO     Round 1: saved the best model with score 0.356825                                                                         aggregator.py:1081
+[16:01:09] INFO     Round 1: Metrics: {'aggregator/aggregated_model_validation/dice_coef': 0.35682472586631775,                              metric_writer.py:52
+                    'aggregator/locally_tuned_model_validation/dice_coef': 0.3778470754623413, 'aggregator/train/soft_dice_loss':                               
+                    0.5953261337280273}                                                                                                                         
+           INFO     Saving round 1 model...                                                                                                   aggregator.py:1119
+[16:01:57] INFO     Committed model for round 1, saved 136 model tensors and 383 next round model tensors  with best_score                  persistent_db.py:220
+                    0.35682472586631775                                                                                                                         
+           INFO     Persist model and clean task result for round 1                                                                            aggregator.py:378
+[16:01:58] INFO     Experiment Completed. Cleaning up...                                                                                      aggregator.py:1130
+           INFO     Sending signal to collaborator collaborator1 to shutdown...                                                                aggregator.py:462
+[16:02:00] INFO     Sending signal to collaborator collaborator2 to shutdown...                                                                aggregator.py:462
+
+ ✔️ OK
