@@ -1,0 +1,556 @@
+(openfl-quickstart) [/home/azureuser/payalcha_openfl/openfl-tutorials/experimental/workflow/CrowdGuard]> python cifar10_crowdguard.py --comm_round 5
+Aggregator step "start" registered
+Collaborator step "train" registered
+Aggregator step "fed_avg_aggregation" registered
+Aggregator step "collect_models" registered
+Collaborator step "local_validation" registered
+Aggregator step "defend" registered
+Aggregator step "end" registered
+Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to ./data/cifar-10-python.tar.gz
+100%|███████████████████████████████████████████████████████████████████████████████████████████| 170498071/170498071 [00:01<00:00, 103521112.74it/s]
+Extracting ./data/cifar-10-python.tar.gz to ./data
+Files already downloaded and verified
+Dataset info (total 60000): train - 24000, test - 24000, 
+Local runtime collaborators = ['benign_00', 'benign_01', 'benign_02', 'malicious_00']
+####################
+Round 0...
+####################
+
+Calling start
+Performing initialization for model
+
+Calling train
+####################
+Performing model training for collaborator benign_00 in round 0
+Benign Train set: Avg. loss: 2.302742360754216, Accuracy: 591/6000 (9.850%)
+Benign Test set: Avg. loss: 2.302671710650126, Accuracy: 617/6000 (10.283%)
+Backdoor Test set: Avg. loss: 2.30113685131073, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.302221080090137, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.302647829055786, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.3148340384165444, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_01 in round 0
+Benign Train set: Avg. loss: 2.3026664003412773, Accuracy: 635/6000 (10.583%)
+Benign Test set: Avg. loss: 2.3026931285858154, Accuracy: 586/6000 (9.767%)
+Backdoor Test set: Avg. loss: 2.3011266787846885, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.302298552178322, Accuracy: 635/6000 (10.583%)
+Benign Test set: Avg. loss: 2.3024829626083374, Accuracy: 586/6000 (9.767%)
+Backdoor Test set: Avg. loss: 2.3075416485468545, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_02 in round 0
+Benign Train set: Avg. loss: 2.3027859216040754, Accuracy: 595/6000 (9.917%)
+Benign Test set: Avg. loss: 2.3024681409200034, Accuracy: 606/6000 (10.100%)
+Backdoor Test set: Avg. loss: 2.3011402686436973, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3022599892413362, Accuracy: 608/6000 (10.133%)
+Benign Test set: Avg. loss: 2.3022758960723877, Accuracy: 602/6000 (10.033%)
+Backdoor Test set: Avg. loss: 2.3106804291407266, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator malicious_00 in round 0
+Benign Train set: Avg. loss: 2.301900583378812, Accuracy: 303/6000 (5.050%)
+Benign Test set: Avg. loss: 2.3026925325393677, Accuracy: 595/6000 (9.917%)
+Backdoor Test set: Avg. loss: 2.3011395931243896, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 1.6744738810874047, Accuracy: 3312/6000 (55.200%)
+Benign Test set: Avg. loss: 2.5931840737660727, Accuracy: 596/6000 (9.933%)
+Backdoor Test set: Avg. loss: 0.7691768606503805, Accuracy: 6000/6000 (100.000%)
+Scale Model by 4.0
+Should transfer from train to collect_models
+
+Calling collect_models
+
+Calling local_validation
+Performing model validation for collaborator benign_00 in round 0
+Distance: cosine, use y 2: [np.float64(18.33777962099972), np.float64(0.10320878070020933)]
+Distance: cosine, use x 2: [np.float64(2.1277148255957457), np.float64(0.10320878070020978)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.34906131689017084), np.float64(0.17276451595436804)]
+Distance: euclid, use x 2: [np.float64(20.2305107318908), np.float64(0.17276451595436804)]
+Distance: euclid, use y 1: [np.float64(10.95445115010334)]
+Distance: euclid, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Suspicious Models detected by 0: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_01 in round 0
+Distance: cosine, use y 2: [np.float64(1.5846425822063983), np.float64(0.2510029692327498)]
+Distance: cosine, use x 2: [np.float64(19.05603604385651), np.float64(0.2510029692327507)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.14973668354891423), np.float64(0.1908297313230598)]
+Distance: euclid, use x 2: [np.float64(20.50752685058528), np.float64(0.14973668354891512)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 1: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_02 in round 0
+Distance: cosine, use y 2: [np.float64(18.67139547534746), np.float64(0.3456209841365294)]
+Distance: cosine, use x 2: [np.float64(0.345620984136529), np.float64(1.8297387209846505)]
+Distance: cosine, use y 1: [np.float64(10.954451150103342)]
+Distance: cosine, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.15270787536141928), np.float64(0.10621032805682429)]
+Distance: euclid, use x 2: [np.float64(20.547995287204788), np.float64(0.1062103280568234)]
+Distance: euclid, use y 1: [np.float64(10.954451150103337)]
+Distance: euclid, use x 2: [np.float64(10.954451150103344), np.float64(0.0)]
+Suspicious Models detected by 2: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator malicious_00 in round 0
+Distance: cosine, use y 2: [np.float64(2.435625766214314), np.float64(3.334345649812491)]
+Distance: cosine, use x 2: [np.float64(13.723688337403495), np.float64(2.435625766214314)]
+Distance: cosine, use y 1: [np.float64(10.95445115010329)]
+Distance: cosine, use x 2: [np.float64(10.95445115010336), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(10.82199320907539), np.float64(0.19493642916679838)]
+Distance: euclid, use x 2: [np.float64(0.19493642916679843), np.float64(8.156920346835879)]
+Distance: euclid, use y 1: [np.float64(10.954451150101548)]
+Distance: euclid, use x 2: [np.float64(10.954451150105118), np.float64(0.0)]
+Suspicious Models detected by 3: [1, 2]
+Should transfer from local_validation to defend
+
+Calling defend
+Agglomerative Clustering: {0: array([0, 1, 2]), 1: array([3])}
+DBScan Input: [0 1 2]
+DBScan Clustering: [0 1 2]
+Negatives: [0, 1, 2]
+Finished round 1/5
+
+Calling train
+####################
+Performing model training for collaborator benign_00 in round 1
+Benign Train set: Avg. loss: 2.302362807253574, Accuracy: 708/6000 (11.800%)
+Benign Test set: Avg. loss: 2.302526672681173, Accuracy: 668/6000 (11.133%)
+Backdoor Test set: Avg. loss: 2.3110111157099404, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3019249223648233, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.3024866580963135, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.3227768739064536, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_01 in round 1
+Benign Train set: Avg. loss: 2.302398310062733, Accuracy: 702/6000 (11.700%)
+Benign Test set: Avg. loss: 2.302491784095764, Accuracy: 668/6000 (11.133%)
+Backdoor Test set: Avg. loss: 2.3109944661458335, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3020413023360233, Accuracy: 635/6000 (10.583%)
+Benign Test set: Avg. loss: 2.302308201789856, Accuracy: 586/6000 (9.767%)
+Backdoor Test set: Avg. loss: 2.3170925776163735, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_02 in round 1
+Benign Train set: Avg. loss: 2.302402207191954, Accuracy: 714/6000 (11.900%)
+Benign Test set: Avg. loss: 2.302295366923014, Accuracy: 715/6000 (11.917%)
+Backdoor Test set: Avg. loss: 2.311012387275696, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3019548844783864, Accuracy: 611/6000 (10.183%)
+Benign Test set: Avg. loss: 2.3021159172058105, Accuracy: 605/6000 (10.083%)
+Backdoor Test set: Avg. loss: 2.316450277964274, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator malicious_00 in round 1
+Benign Train set: Avg. loss: 2.306719626518006, Accuracy: 382/6000 (6.367%)
+Benign Test set: Avg. loss: 2.30247970422109, Accuracy: 690/6000 (11.500%)
+Backdoor Test set: Avg. loss: 2.3110216856002808, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 1.6661043642683233, Accuracy: 3312/6000 (55.200%)
+Benign Test set: Avg. loss: 2.623613874117533, Accuracy: 596/6000 (9.933%)
+Backdoor Test set: Avg. loss: 0.7255138456821442, Accuracy: 6000/6000 (100.000%)
+Scale Model by 4.0
+Should transfer from train to collect_models
+
+Calling collect_models
+
+Calling local_validation
+Performing model validation for collaborator benign_00 in round 1
+Distance: cosine, use y 2: [np.float64(0.6678821119511218), np.float64(0.45153646766225286)]
+Distance: cosine, use x 2: [np.float64(18.161881805035883), np.float64(0.4515364676622533)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.12364533440837899), np.float64(0.14683917350158726)]
+Distance: euclid, use x 2: [np.float64(20.528368135726918), np.float64(0.12364533440837899)]
+Distance: euclid, use y 1: [np.float64(10.954451150103337)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 0: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_01 in round 1
+Distance: cosine, use y 2: [np.float64(18.100145222295783), np.float64(0.29399617505323583)]
+Distance: cosine, use x 2: [np.float64(1.0787087528354986), np.float64(0.29399617505323583)]
+Distance: cosine, use y 1: [np.float64(10.954451150103369)]
+Distance: cosine, use x 2: [np.float64(10.954451150103298), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.06403676251473911), np.float64(0.09294535236647228)]
+Distance: euclid, use x 2: [np.float64(20.60033959040896), np.float64(0.06403676251473822)]
+Distance: euclid, use y 1: [np.float64(10.954451150103305)]
+Distance: euclid, use x 2: [np.float64(10.954451150103342), np.float64(0.0)]
+Suspicious Models detected by 1: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_02 in round 1
+Distance: cosine, use y 2: [np.float64(0.36431655950791786), np.float64(2.1321649083308634)]
+Distance: cosine, use x 2: [np.float64(18.31825840145862), np.float64(0.36431655950791875)]
+Distance: cosine, use y 1: [np.float64(10.954451150103331)]
+Distance: cosine, use x 2: [np.float64(10.954451150103342), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.13265736707907916), np.float64(0.09027826290052321)]
+Distance: euclid, use x 2: [np.float64(20.57888600035605), np.float64(0.0902782629005241)]
+Distance: euclid, use y 1: [np.float64(10.95445115010334)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 2: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator malicious_00 in round 1
+Distance: cosine, use y 2: [np.float64(12.141107584921468), np.float64(1.3159448856697586)]
+Distance: cosine, use x 2: [np.float64(1.3159448856697586), np.float64(5.691903455738551)]
+Distance: cosine, use y 1: [np.float64(10.95445115010387)]
+Distance: cosine, use x 2: [np.float64(10.9544511501028), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(12.660229673879527), np.float64(0.4025230331717353)]
+Distance: euclid, use x 2: [np.float64(6.229427037020293), np.float64(0.40252303317173554)]
+Distance: euclid, use y 1: [np.float64(10.954451150252499)]
+Distance: euclid, use x 2: [np.float64(10.954451149954165), np.float64(0.0)]
+Suspicious Models detected by 3: [0, 2]
+Should transfer from local_validation to defend
+
+Calling defend
+Agglomerative Clustering: {0: array([0, 1, 2]), 1: array([3])}
+DBScan Input: [0 1 2]
+DBScan Clustering: [0 1 2]
+Negatives: [0, 1, 2]
+Finished round 2/5
+
+Calling train
+####################
+Performing model training for collaborator benign_00 in round 2
+Benign Train set: Avg. loss: 2.3020512727980917, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.3023722966512046, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.3187747399012246, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3016458939998707, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.3023205598195395, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.329268137613932, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_01 in round 2
+Benign Train set: Avg. loss: 2.302166772649643, Accuracy: 592/6000 (9.867%)
+Benign Test set: Avg. loss: 2.302305062611898, Accuracy: 610/6000 (10.167%)
+Backdoor Test set: Avg. loss: 2.3187520106633506, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3018015927456794, Accuracy: 635/6000 (10.583%)
+Benign Test set: Avg. loss: 2.3020742734273276, Accuracy: 586/6000 (9.767%)
+Backdoor Test set: Avg. loss: 2.323541005452474, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_02 in round 2
+Benign Train set: Avg. loss: 2.302106986654566, Accuracy: 607/6000 (10.117%)
+Benign Test set: Avg. loss: 2.302117705345154, Accuracy: 602/6000 (10.033%)
+Backdoor Test set: Avg. loss: 2.3187745809555054, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3016683446600084, Accuracy: 651/6000 (10.850%)
+Benign Test set: Avg. loss: 2.3019185860951743, Accuracy: 643/6000 (10.717%)
+Backdoor Test set: Avg. loss: 2.324155410130819, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator malicious_00 in round 2
+Benign Train set: Avg. loss: 2.3104827987386827, Accuracy: 325/6000 (5.417%)
+Benign Test set: Avg. loss: 2.302287141482035, Accuracy: 614/6000 (10.233%)
+Backdoor Test set: Avg. loss: 2.3187930981318154, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 1.657377356544454, Accuracy: 3312/6000 (55.200%)
+Benign Test set: Avg. loss: 2.6824429432551065, Accuracy: 596/6000 (9.933%)
+Backdoor Test set: Avg. loss: 0.6512856582800547, Accuracy: 6000/6000 (100.000%)
+Scale Model by 4.0
+Should transfer from train to collect_models
+
+Calling collect_models
+
+Calling local_validation
+Performing model validation for collaborator benign_00 in round 2
+Distance: cosine, use y 2: [np.float64(0.05557229259160179), np.float64(17.101579711087304)]
+Distance: cosine, use x 2: [np.float64(2.1818411587598243), np.float64(0.05557229259160135)]
+Distance: cosine, use y 1: [np.float64(10.954451150103338)]
+Distance: cosine, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.18708208369858337), np.float64(0.0912092712484931)]
+Distance: euclid, use x 2: [np.float64(20.51299367207135), np.float64(0.0912092712484931)]
+Distance: euclid, use y 1: [np.float64(10.95445115010334)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 0: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_01 in round 2
+Distance: cosine, use y 2: [np.float64(0.13506262276680747), np.float64(1.7946049258766124)]
+Distance: cosine, use x 2: [np.float64(18.3556257395547), np.float64(0.13506262276680747)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.16910733944006662), np.float64(0.07951768625034283)]
+Distance: euclid, use x 2: [np.float64(20.54894590526186), np.float64(0.07951768625034195)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 1: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_02 in round 2
+Distance: cosine, use y 2: [np.float64(18.067812734768964), np.float64(0.38544768162761445)]
+Distance: cosine, use x 2: [np.float64(0.385447681627614), np.float64(1.47824004395203)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.10899763051528755), np.float64(0.12894067056655079)]
+Distance: euclid, use x 2: [np.float64(20.555197666376117), np.float64(0.10899763051528844)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 2: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator malicious_00 in round 2
+Distance: cosine, use y 2: [np.float64(5.451294386406973), np.float64(1.3879709384683916)]
+Distance: cosine, use x 2: [np.float64(13.270437221540048), np.float64(1.3879709384683914)]
+Distance: cosine, use y 1: [np.float64(10.954451150103306)]
+Distance: cosine, use x 2: [np.float64(10.954451150103349), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(2.7530154015122736), np.float64(1.932274961565608)]
+Distance: euclid, use x 2: [np.float64(14.476560610161293), np.float64(1.9322749615656085)]
+Distance: euclid, use y 1: [np.float64(10.954451150088566)]
+Distance: euclid, use x 2: [np.float64(10.954451150118093), np.float64(0.0)]
+Suspicious Models detected by 3: [1]
+Should transfer from local_validation to defend
+
+Calling defend
+Agglomerative Clustering: {0: array([0, 1, 2]), 1: array([3])}
+DBScan Input: [0 1 2]
+DBScan Clustering: [0 1 2]
+Negatives: [0, 1, 2]
+Finished round 3/5
+
+Calling train
+####################
+Performing model training for collaborator benign_00 in round 3
+Benign Train set: Avg. loss: 2.3017620774025613, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.302190144856771, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.325651486714681, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.301300156623759, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.3021166721979776, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.334221283594767, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_01 in round 3
+Benign Train set: Avg. loss: 2.3019191318369927, Accuracy: 592/6000 (9.867%)
+Benign Test set: Avg. loss: 2.3020969231923423, Accuracy: 610/6000 (10.167%)
+Backdoor Test set: Avg. loss: 2.3256223599116006, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.301513470233755, Accuracy: 635/6000 (10.583%)
+Benign Test set: Avg. loss: 2.30182937781016, Accuracy: 586/6000 (9.767%)
+Backdoor Test set: Avg. loss: 2.328422705332438, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_02 in round 3
+Benign Train set: Avg. loss: 2.301801826091523, Accuracy: 607/6000 (10.117%)
+Benign Test set: Avg. loss: 2.3019152879714966, Accuracy: 602/6000 (10.033%)
+Backdoor Test set: Avg. loss: 2.3256510496139526, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.301325000346975, Accuracy: 702/6000 (11.700%)
+Benign Test set: Avg. loss: 2.30169677734375, Accuracy: 694/6000 (11.567%)
+Backdoor Test set: Avg. loss: 2.330774943033854, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator malicious_00 in round 3
+Benign Train set: Avg. loss: 2.313822822367891, Accuracy: 325/6000 (5.417%)
+Benign Test set: Avg. loss: 2.302069306373596, Accuracy: 614/6000 (10.233%)
+Backdoor Test set: Avg. loss: 2.3256764014561973, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 1.6684119733090097, Accuracy: 3312/6000 (55.200%)
+Benign Test set: Avg. loss: 2.6171438694000244, Accuracy: 596/6000 (9.933%)
+Backdoor Test set: Avg. loss: 0.7335929671923319, Accuracy: 6000/6000 (100.000%)
+Scale Model by 4.0
+Should transfer from train to collect_models
+
+Calling collect_models
+
+Calling local_validation
+Performing model validation for collaborator benign_00 in round 3
+Distance: cosine, use y 2: [np.float64(18.531330984154735), np.float64(0.27356967998399995)]
+Distance: cosine, use x 2: [np.float64(0.27356967998400084), np.float64(0.3613378774058438)]
+Distance: cosine, use y 1: [np.float64(10.954451150103338)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.10857532880304088), np.float64(0.20038488411506616)]
+Distance: euclid, use x 2: [np.float64(20.46027366156628), np.float64(0.10857532880304)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Suspicious Models detected by 0: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_01 in round 3
+Distance: cosine, use y 2: [np.float64(18.12246552256999), np.float64(0.24529138468812306)]
+Distance: cosine, use x 2: [np.float64(0.24529138468812306), np.float64(1.8639599586976594)]
+Distance: cosine, use y 1: [np.float64(10.954451150103338)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.08706427928288996), np.float64(0.23267103041633774)]
+Distance: euclid, use x 2: [np.float64(20.50862782458575), np.float64(0.08706427928288996)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 1: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_02 in round 3
+Distance: cosine, use y 2: [np.float64(0.06229727375886451), np.float64(1.1235052273893453)]
+Distance: cosine, use x 2: [np.float64(18.00782736923582), np.float64(0.062297273758863625)]
+Distance: cosine, use y 1: [np.float64(10.954451150103338)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.11841391936670576), np.float64(0.12308817437700181)]
+Distance: euclid, use x 2: [np.float64(20.537133295747637), np.float64(0.11841391936670576)]
+Distance: euclid, use y 1: [np.float64(10.954451150103342)]
+Distance: euclid, use x 2: [np.float64(10.954451150103317), np.float64(0.0)]
+Suspicious Models detected by 2: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator malicious_00 in round 3
+Distance: cosine, use y 2: [np.float64(15.337728910749835), np.float64(1.846693087040759)]
+Distance: cosine, use x 2: [np.float64(1.8466930870407587), np.float64(3.2514301946297044)]
+Distance: cosine, use y 1: [np.float64(10.954451150103251)]
+Distance: cosine, use x 2: [np.float64(10.954451150103411), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(8.814736086994152), np.float64(0.22314653967479442)]
+Distance: euclid, use x 2: [np.float64(9.826510997498149), np.float64(0.22314653967479445)]
+Distance: euclid, use y 1: [np.float64(10.954451150102607)]
+Distance: euclid, use x 2: [np.float64(10.95445115010406), np.float64(0.0)]
+Suspicious Models detected by 3: [0, 2]
+Should transfer from local_validation to defend
+
+Calling defend
+Agglomerative Clustering: {0: array([0, 1, 2]), 1: array([3])}
+DBScan Input: [0 1 2]
+DBScan Clustering: [0 1 2]
+Negatives: [0, 1, 2]
+Finished round 4/5
+
+Calling train
+####################
+Performing model training for collaborator benign_00 in round 4
+Benign Train set: Avg. loss: 2.3014119546464147, Accuracy: 638/6000 (10.633%)
+Benign Test set: Avg. loss: 2.3019859393437705, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.3311343987782798, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3009286142410117, Accuracy: 634/6000 (10.567%)
+Benign Test set: Avg. loss: 2.30186394850413, Accuracy: 572/6000 (9.533%)
+Backdoor Test set: Avg. loss: 2.339980959892273, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_01 in round 4
+Benign Train set: Avg. loss: 2.301666055588012, Accuracy: 593/6000 (9.883%)
+Benign Test set: Avg. loss: 2.301864584287008, Accuracy: 611/6000 (10.183%)
+Backdoor Test set: Avg. loss: 2.331096887588501, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.301173432076231, Accuracy: 646/6000 (10.767%)
+Benign Test set: Avg. loss: 2.301530122756958, Accuracy: 600/6000 (10.000%)
+Backdoor Test set: Avg. loss: 2.3337987263997397, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator benign_02 in round 4
+Benign Train set: Avg. loss: 2.301475337211122, Accuracy: 611/6000 (10.183%)
+Benign Test set: Avg. loss: 2.301698168118795, Accuracy: 602/6000 (10.033%)
+Backdoor Test set: Avg. loss: 2.3311312596003213, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 2.3009987853943032, Accuracy: 643/6000 (10.717%)
+Benign Test set: Avg. loss: 2.3014227549235025, Accuracy: 626/6000 (10.433%)
+Backdoor Test set: Avg. loss: 2.3346081574757895, Accuracy: 0/6000 (0.000%)
+Should transfer from train to collect_models
+
+Calling train
+####################
+Performing model training for collaborator malicious_00 in round 4
+Benign Train set: Avg. loss: 2.3164076957296817, Accuracy: 327/6000 (5.450%)
+Benign Test set: Avg. loss: 2.301822225252787, Accuracy: 616/6000 (10.267%)
+Backdoor Test set: Avg. loss: 2.3311655521392822, Accuracy: 0/6000 (0.000%)
+Benign Train set: Avg. loss: 1.654794876245742, Accuracy: 3312/6000 (55.200%)
+Benign Test set: Avg. loss: 2.7058492501576743, Accuracy: 596/6000 (9.933%)
+Backdoor Test set: Avg. loss: 0.6238488256931305, Accuracy: 6000/6000 (100.000%)
+Scale Model by 4.0
+Should transfer from train to collect_models
+
+Calling collect_models
+
+Calling local_validation
+Performing model validation for collaborator benign_00 in round 4
+Distance: cosine, use y 2: [np.float64(18.244423097858544), np.float64(0.30614493952019917)]
+Distance: cosine, use x 2: [np.float64(0.30614493952019917), np.float64(0.5985599372906041)]
+Distance: cosine, use y 1: [np.float64(10.954451150103338)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.11040049896172466), np.float64(0.17618875931274935)]
+Distance: euclid, use x 2: [np.float64(20.483641162205984), np.float64(0.11040049896172555)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103342), np.float64(0.0)]
+Suspicious Models detected by 0: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_01 in round 4
+Distance: cosine, use y 2: [np.float64(0.44752067423858577), np.float64(1.569237980876709)]
+Distance: cosine, use x 2: [np.float64(18.134186523307804), np.float64(0.4475206742385862)]
+Distance: cosine, use y 1: [np.float64(10.95445115010334)]
+Distance: cosine, use x 2: [np.float64(10.954451150103342), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.09163769513227393), np.float64(0.13306238033874784)]
+Distance: euclid, use x 2: [np.float64(20.534858006147985), np.float64(0.09163769513227482)]
+Distance: euclid, use y 1: [np.float64(10.954451150103347)]
+Distance: euclid, use x 2: [np.float64(10.954451150103328), np.float64(0.0)]
+Suspicious Models detected by 1: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator benign_02 in round 4
+Distance: cosine, use y 2: [np.float64(17.55868427984521), np.float64(0.10062724656825406)]
+Distance: cosine, use x 2: [np.float64(1.3564838003370365), np.float64(0.10062724656825406)]
+Distance: cosine, use y 1: [np.float64(10.954451150103337)]
+Distance: cosine, use x 2: [np.float64(10.954451150103344), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(0.05151231425001157), np.float64(0.08344607627230438)]
+Distance: euclid, use x 2: [np.float64(20.60779622362368), np.float64(0.05151231425001068)]
+Distance: euclid, use y 1: [np.float64(10.954451150103338)]
+Distance: euclid, use x 2: [np.float64(10.954451150103338), np.float64(0.0)]
+Suspicious Models detected by 2: [3]
+Should transfer from local_validation to defend
+
+Calling local_validation
+Performing model validation for collaborator malicious_00 in round 4
+Distance: cosine, use y 2: [np.float64(10.102589013314368), np.float64(0.1900988615436157)]
+Distance: cosine, use x 2: [np.float64(0.1900988615436157), np.float64(10.307563707965318)]
+Distance: cosine, use y 1: [np.float64(10.954451150103324)]
+Distance: cosine, use x 2: [np.float64(10.95445115010334), np.float64(0.0)]
+Distance: euclid, use y 2: [np.float64(14.108705204437697), np.float64(1.1863157821983883)]
+Distance: euclid, use x 2: [np.float64(3.970133086993155), np.float64(1.1863157821983883)]
+Distance: euclid, use y 1: [np.float64(10.954451150068003)]
+Distance: euclid, use x 2: [np.float64(10.95445115013866), np.float64(0.0)]
+Suspicious Models detected by 3: [1, 2]
+Should transfer from local_validation to defend
+
+Calling defend
+Agglomerative Clustering: {0: array([0, 1, 2]), 1: array([3])}
+DBScan Input: [0 1 2]
+DBScan Clustering: [0 1 2]
+Negatives: [0, 1, 2]
+
+Calling end
+####################
+All rounds completed successfully
+####################
+This is the end of the flow
+####################
