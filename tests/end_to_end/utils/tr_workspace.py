@@ -61,6 +61,9 @@ def common_workspace_creation(request, eval_scope=False):
     fh.create_persistent_store(model_owner.name, local_bind_path)
 
     model_owner.create_workspace()
+    
+    if request.config.model_name == constants.ModelName.KERAS_HIPPMAPP3R.value:
+        fh.download_hippmapp3r_data(request.config.num_collaborators, local_bind_path, data_size=constants.HIPPMAPP3R_DATA_SIZE)
 
     # Modify the plan
     plan_path = constants.AGG_PLAN_PATH.format(local_bind_path)
@@ -150,6 +153,10 @@ def create_tr_workspace(request, eval_scope=False):
     # outside of the loop
     if request.config.model_name.lower() in [constants.ModelName.XGB_HIGGS.value, constants.ModelName.FLOWER_APP_PYTORCH.value]:
         fh.setup_collaborator_data(collaborators, request.config.model_name, local_bind_path)
+    if request.config.model_name.lower() == constants.ModelName.KERAS_HIPPMAPP3R.value:
+        fh.copy_gandlf_data_to_collaborators(
+            aggregator, collaborators, local_bind_path
+        )
 
     if request.config.use_tls:
         fh.setup_pki_for_collaborators(collaborators, model_owner, local_bind_path)

@@ -392,7 +392,6 @@ def federation_env_setup_and_validate(request, eval_scope=False):
 
     # Determine the test type based on the markers
     test_env = request.config.test_env
-
     # Validate the model name and create the workspace name
     if not request.config.model_name.replace("/", "_").replace("-", "_").upper() in constants.ModelName._member_names_:
         raise ValueError(f"Invalid model name: {request.config.model_name}")
@@ -626,10 +625,62 @@ def setup_collaborator_data(collaborators, model_name, local_bind_path):
             download_higgs_data(collaborators, local_bind_path)
         elif model_name == constants.ModelName.FLOWER_APP_PYTORCH.value:
             download_flower_data(collaborators, local_bind_path)
+        # elif model_name == constants.ModelName.KERAS_HIPPMAPP3R.value:
+        #     download_hippmapp3r_data(collaborators, local_bind_path)
 
     log.info("Data setup is complete for all the collaborators")
 
 
+def download_hippmapp3r_data(collaborators, local_bind_path, data_size):
+    """
+    Download the data for the model and copy to the respective collaborator workspaces
+    Also modify the data.yaml file for all the collaborators
+    Args:
+        collaborators (list): List of collaborator objects
+        local_bind_path (str): Local bind path
+    Returns:
+        bool: True if successful, else False
+    """    
+    # log.info(f"Copying {constants.DATA_SETUP_FILE} from one of the collaborator workspaces to the local bind path..")
+    # try:
+    #     shutil.copyfile(
+    #         src=os.path.join(collaborators[0].workspace_path, "src", constants.DATA_SETUP_FILE),
+    #         dst=os.path.join(local_bind_path, constants.DATA_SETUP_FILE)
+    #     )
+    # except Exception as e:
+    #     raise ex.DataSetupException(f"Failed to copy data setup file: {e}")
+
+    log.info("Downloading the data for the model. This will take some time to complete based on the data size ..")
+    setup_data_path = os.path.join(local_bind_path, "aggregator", "workspace")
+    try:
+        command = ["python", os.path.join(setup_data_path, "src", constants.DATA_SETUP_FILE), "--num_collaborators", str(collaborators), "--total_dataset_size_per_col_MB", str(data_size)]
+        result = subprocess.run(command, cwd=setup_data_path, check=True)  # nosec B603
+    except Exception as e:
+        raise ex.DataSetupException(f"Failed to download data for given model - {e}")
+
+    # try:
+    #     # Copy the data to the respective workspaces based on the index
+    #     for index, collaborator in enumerate(collaborators, start=1):
+    #         src_folder = os.path.join(local_bind_path, "data", str(index))
+    #         dst_folder = os.path.join(collaborator.workspace_path, "data", str(index))
+    #         if os.path.exists(src_folder):
+    #             shutil.copytree(src_folder, dst_folder, dirs_exist_ok=True)
+    #             log.info(f"Copied data from {src_folder} to {dst_folder}")
+    #         else:
+    #             raise ex.DataSetupException(f"Source folder {src_folder} does not exist for {collaborator.name}")
+
+    #         # Modify the data.yaml file for all the collaborators
+    #         collaborator.modify_data_file(
+    #             constants.COL_DATA_FILE.format(local_bind_path, collaborator.name),
+    #             index,
+    #         )
+    # except Exception as e:
+    #     raise ex.DataSetupException(f"Failed to modify the data file: {e}")
+    # # Remove the data folder from local bind path
+    # shutil.rmtree(os.path.join(local_bind_path, "data"), ignore_errors=True)
+    # return True
+    
+    
 def download_gandlf_data(aggregator, local_bind_path, num_collaborators, results_path):
     """
     Function to download the data for GanDLF segmentation test model and copy to the respective collaborator workspaces

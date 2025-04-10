@@ -20,11 +20,13 @@ class ModelName(Enum):
     XGB_HIGGS = "xgb_higgs"
     GANDLF_SEG_TEST = "gandlf_seg_test"
     FLOWER_APP_PYTORCH = "flower-app-pytorch"
+    KERAS_HIPPMAPP3R = "keras/hippmapp3r"
 
 NUM_COLLABORATORS = 2
 NUM_ROUNDS = 5
 WORKSPACE_NAME = "my_federation"
 SUCCESS_MARKER = "✔️ OK"
+HIPPMAPP3R_DATA_SIZE = 200
 
 # Docker specific constants
 CREATE_OPENFL_NW = "docker network create"
