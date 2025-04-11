@@ -29,6 +29,8 @@ jobs:
   publish_package:
     name: Publish Nightly Package
     runs-on: ubuntu-22.04
+    output:
+      version: ${{ steps.modify_setup.outputs.VERSION }}
     environment: dev
     if: |
       (github.event_name == 'schedule' && github.repository_owner == 'securefederatedai') ||
@@ -40,11 +42,13 @@ jobs:
         ref: ${{ env.COMMIT_ID }}
 
     - name: Modify setup.py for nightly build
+      id: modify_setup
       run: |
         echo "Creating package..."
         version=$(grep -oP "(?<=version=')[^']+" setup.py)
         date_suffix=$(date +%Y%m%d)
         new_version="${version}${date_suffix}"
+        echo "VERSION=$new_version" >> "$GITHUB_OUTPUT"
         sed -i 's/name=.*/name="openfl-nightly",/' setup.py
         sed -i "s/version=.*/version='$new_version',/" setup.py
         sed -i 's/Development Status :: 5 - Production\/Stable/Development Status :: 4 - Beta/' setup.py

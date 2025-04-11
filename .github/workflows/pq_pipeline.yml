@@ -202,3 +202,13 @@ jobs:
     with:
       commit_id: ${{ needs.set_commit_id_for_all_jobs.outputs.commit_id }}
     secrets: inherit
+
+  test_latest_nightly_package:
+    if: |
+      (github.event_name == 'schedule' && github.repository_owner == 'securefederatedai') ||
+      (github.event_name == 'workflow_dispatch')
+    name: Test Latest Nightly Package
+    needs: publish_package
+    uses: ./.github/workflows/test_latest_nightly_package.yml
+    with:
+      version: ${{ needs.publish_package.outputs.VERSION }}
