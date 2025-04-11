@@ -1,0 +1,127 @@
+#---------------------------------------------------------------------------
+# Workflow to run 301_MNIST_Watermarking notebook
+#---------------------------------------------------------------------------
+name: Test Latest Nightly Package
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: false
+        type: string
+  workflow_dispatch:
+    inputs:
+      version:
+        required: false
+        type: string
+        description: "Version to use for the nightly build"
+
+permissions:
+  contents: read
+
+env:
+  VERSION: ${{ inputs.version  }} # use version from the calling workflow
+
+jobs:
+  test_wf_with_nightly_package:
+    name: WF Watermarking Without TLS
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+    - name: Checkout OpenFL repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies # Without this step, fx command will not work
+      id: install_dependencies
+      run: |
+        python -m pip install --upgrade pip ipython ipykernel
+        if [ -z "${{ env.VERSION }}" ]; then
+          echo "No version specified, installing latest nightly package"
+          pip install openfl-nightly
+        else
+          echo "Installing nightly package version ${{ env.VERSION }}"
+          pip install openfl-nightly==${{ env.VERSION }}
+        fi
+        pip install -r test-requirements.txt
+
+    - name: Run Federated Runtime 301 MNIST Watermarking via pytest
+      id: run_tests
+      run: |
+        python -m pytest -s tests/end_to_end/test_suites/wf_federated_runtime_tests.py -k test_federated_runtime_301_watermarking
+        echo "Federated Runtime 301 MNIST Watermarking test run completed"
+
+    - name: Print test summary
+      id: print_test_summary
+      if: ${{ always() }}
+      run: |
+        export PYTHONPATH="$PYTHONPATH:."
+        python tests/end_to_end/utils/summary_helper.py --func_name "print_federated_runtime_score" --nb_name "wf_watermarking"
+        echo "Test summary printed"
+
+    - name: Tar files
+      if: ${{ always() }}   # collect artifacts regardless of failures
+      run: |
+        tar -cvf wf_nightly_package.tar --exclude="__pycache__" $HOME/results --ignore-failed-read
+        echo "TAR file created"
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      if: ${{ always() }}   # collect artifacts regardless of failures
+      with:
+        name: package_301_watermarking_${{ github.run_id }}
+        path: wf_nightly_package.tar
+
+
+  test_tr_with_nightly_package:
+    name: With TLS
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    env:
+      MODEL_NAME: "keras/mnist"
+      NUM_ROUNDS: 1
+      NUM_COLLABORATORS: 1
+      PYTHON_VERSION: 3.10
+
+    steps:
+      - name: Checkout OpenFL repository
+        id: checkout_openfl
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies # Without this step, fx command will not work
+        id: install_dependencies
+        run: |
+          python -m pip install --upgrade pip ipython ipykernel
+          if [ -z "${{ env.VERSION }}" ]; then
+            echo "No version specified, installing latest nightly package"
+            pip install openfl-nightly
+          else
+            echo "Installing nightly package version ${{ env.VERSION }}"
+            pip install openfl-nightly==${{ env.VERSION }}
+          fi
+          pip install -r test-requirements.txt
+
+
+      - name: Run Task Runner E2E tests with TLS
+        id: run_tests
+        run: |
+          python -m pytest -s tests/end_to_end/test_suites/task_runner_tests.py \
+          -m task_runner_basic --model_name ${{ env.MODEL_NAME }} \
+          --num_rounds ${{ env.NUM_ROUNDS }} --num_collaborators ${{ env.NUM_COLLABORATORS }}
+          echo "Task runner end to end test run completed"
+
+      - name: Post test run
+        uses: ./.github/actions/tr_post_test_run
+        if: ${{ always() }}
+        with:
+          test_type: "With_TLS_Nightly_Package"
