@@ -43,24 +43,24 @@ jobs:
 
     - name: Modify setup.py for nightly build
       id: modify_setup
-      run: |
-        echo "Creating package..."
-        version=$(grep -oP "(?<=version=')[^']+" setup.py)
-        date_suffix=$(date +%Y%m%d)
-        new_version="${version}${date_suffix}"
-        echo "VERSION=$new_version" >> "$GITHUB_OUTPUT"
-        sed -i 's/name=.*/name="openfl-nightly",/' setup.py
-        sed -i "s/version=.*/version='$new_version',/" setup.py
-        sed -i 's/Development Status :: 5 - Production\/Stable/Development Status :: 4 - Beta/' setup.py
+      run: echo "VERSION=1.9.0.dev20250410" >> "$GITHUB_OUTPUT"
+        # echo "Creating package..."
+        # version=$(grep -oP "(?<=version=')[^']+" setup.py)
+        # date_suffix=$(date +%Y%m%d)
+        # new_version="${version}${date_suffix}"
+        # echo "VERSION=$new_version" >> "$GITHUB_OUTPUT"
+        # sed -i 's/name=.*/name="openfl-nightly",/' setup.py
+        # sed -i "s/version=.*/version='$new_version',/" setup.py
+        # sed -i 's/Development Status :: 5 - Production\/Stable/Development Status :: 4 - Beta/' setup.py
 
-    - name: Build package
-      run: |
-        python3 -m pip install setuptools wheel twine --upgrade build
-        python3 -m pip install .
-        python3 -m build
-        echo "Package built successfully!"
+    # - name: Build package
+    #   run: |
+    #     python3 -m pip install setuptools wheel twine --upgrade build
+    #     python3 -m pip install .
+    #     python3 -m build
+    #     echo "Package built successfully!"
 
-    - name: Upload package to PyPI
-      run: |
-        python3 -m twine upload dist/openfl_nightly* --verbose -u __token__ -p ${{ secrets.PYPI_API_TOKEN }}
-        echo "Package published successfully!"
+    # - name: Upload package to PyPI
+    #   run: |
+    #     python3 -m twine upload dist/openfl_nightly* --verbose -u __token__ -p ${{ secrets.PYPI_API_TOKEN }}
+    #     echo "Package published successfully!"
