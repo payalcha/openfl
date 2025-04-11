@@ -12,6 +12,10 @@ on:
     secrets:
       PYPI_API_TOKEN:
         required: false
+    outputs:
+      version:
+        description: "Version of the nightly package"
+        value: ${{ jobs.publish_package.outputs.version }}
   workflow_dispatch:
     inputs:
       commit_id:
