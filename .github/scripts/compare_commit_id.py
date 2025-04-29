@@ -40,6 +40,9 @@ if __name__ == "__main__":
             # Set commit_id to None in the environment variable
             with open(os.getenv('GITHUB_OUTPUT'), 'a') as github_output:
                 github_output.write('commit_id=\n')
+            # print GITHUB_OUTPUT
+            with open(os.getenv('GITHUB_OUTPUT'), 'r') as github_output:
+                print(github_output.read())
         else:
             print("Commit IDs do not match")
 
