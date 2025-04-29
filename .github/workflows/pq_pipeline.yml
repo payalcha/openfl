@@ -30,6 +30,11 @@ jobs:
       run: |
         echo "commit_id=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
+    - name: If commitID is same as last run
+      id: check_commit_id
+      run: |
+        python3 .github/workflows/compare_commit_id.py
+        
     - name: Print commit ID to summary
       run: |
         echo "Commit ID used: ${{ steps.set_commit_id.outputs.commit_id }}" >> $GITHUB_STEP_SUMMARY
