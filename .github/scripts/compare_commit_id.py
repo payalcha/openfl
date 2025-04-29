@@ -28,7 +28,7 @@ def get_current_commit_id():
         return None
     
     
-if __main__ == "__main__":
+if __name__ == "__main__":
     pypi_commit_id = get_pypi_commit_id(TEST_PYPI_URL)
     current_commit_id = get_current_commit_id()
 
