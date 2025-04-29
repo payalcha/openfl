@@ -13,6 +13,8 @@ def get_pypi_commit_id(url):
     if response.status_code == 200:
         data = response.json()
         commit_id = data['info']['project_urls']['Source Code']
+        commit_id = commit_id.split("/")[-1]
+        print(f"Commit ID from PyPI: {commit_id}")
         return commit_id.split('/')[-1]
     else:
         print("Failed to fetch data from PyPI")
@@ -34,7 +36,7 @@ if __name__ == "__main__":
 
     if pypi_commit_id and current_commit_id:
         if pypi_commit_id == current_commit_id:
-            print("Commit IDs match")
+            print("Commit IDs match, No need to proceed with workflow")
             sys.exit(1)
         else:
             print("Commit IDs do not match")
