@@ -38,7 +38,8 @@ if __name__ == "__main__":
         if pypi_commit_id == current_commit_id:
             print("Commit IDs match, No need to proceed with workflow")
             # Set commit_id to None in the environment variable
-            os.environ['commit_id'] = ''
+            with open(os.getenv('GITHUB_OUTPUT'), 'a') as github_output:
+                github_output.write('commit_id=\n')
         else:
             print("Commit IDs do not match")
 
