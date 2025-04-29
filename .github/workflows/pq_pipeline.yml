@@ -34,17 +34,17 @@ jobs:
     - name: If commitID is same as last run
       id: check_commit_id
       run: |
-        echo $commit_id
         python3 .github/scripts/compare_commit_id.py
 
     - name: Print commit ID to summary
       run: |
-        echo "Commit ID used: ${{ steps.set_commit_id.outputs.commit_id }}" >> $GITHUB_STEP_SUMMARY
+        echo "Commit ID used: ${{ steps.check_commit_id.outputs.commit_id }}" >> $GITHUB_STEP_SUMMARY
 
   wf_mnist_local_runtime:
     if: |
       (github.event_name == 'schedule' && github.repository_owner == 'securefederatedai') ||
-      (github.event_name == 'workflow_dispatch')
+      (github.event_name == 'workflow_dispatch') &&
+      needs.set_commit_id_for_all_jobs.outputs.commit_id != ''
     name: Workflow MNIST Local Runtime
     needs: set_commit_id_for_all_jobs
     uses: ./.github/workflows/workflow_interface_101_mnist.yml
