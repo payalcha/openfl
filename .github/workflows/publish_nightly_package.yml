@@ -66,6 +66,7 @@ jobs:
         python3 -m pytest -s tests/end_to_end/test_suites/task_runner_tests.py \
         -m task_runner_basic --model_name "keras/mnist" \
         --num_rounds 1 --num_collaborators 1
+        cat ~/results/test_federation_via_native/keras_mnist/aggregator/workspace/logs/aggregator.log
         echo "Verified the package installation successfully!"
 
     - name: Upload package to PyPI
