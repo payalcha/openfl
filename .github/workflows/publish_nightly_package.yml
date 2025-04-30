@@ -60,15 +60,15 @@ jobs:
       run: |
         python3 -m pip install setuptools wheel twine --upgrade build
         python3 -m pip install .
-        # python3 -m build
+        python3 -m build
         # echo "OPENFL_NIGHTLY_WHL_FILE=$(ls dist/*.whl)" >> $GITHUB_ENV
         echo "Package built successfully!"
 
     - name: Verify package installation before pushing to PyPI
       run: |
         echo "OpenFL version is $(pip list | grep openfl)" 
-        # python3 -m pip uninstall -y openfl openfl-nightly
-        # python3 -m pip install ${{ env.OPENFL_NIGHTLY_WHL_FILE }}
+        python3 -m pip uninstall -y openfl openfl-nightly
+        python3 -m pip install ${{ env.OPENFL_NIGHTLY_WHL_FILE }}
         python3 -m pip install -r test-requirements.txt
         python3 -m pytest -s tests/end_to_end/test_suites/task_runner_tests.py \
         -m task_runner_basic --model_name "keras/mnist" \
