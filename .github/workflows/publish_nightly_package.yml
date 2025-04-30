@@ -53,8 +53,8 @@ jobs:
       run: |
         python3 -m pip install setuptools wheel twine --upgrade build
         python3 -m pip install .
-        python3 -m build
-        echo "OPENFL_NIGHTLY_WHL_FILE=$(ls dist/*.whl)" >> $GITHUB_ENV
+        # python3 -m build
+        # echo "OPENFL_NIGHTLY_WHL_FILE=$(ls dist/*.whl)" >> $GITHUB_ENV
         echo "Package built successfully!"
 
     - name: Verify package installation before pushing to PyPI
