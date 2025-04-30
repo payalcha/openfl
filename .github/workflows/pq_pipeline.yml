@@ -34,6 +34,7 @@ jobs:
       id: check_commit_id
       run: |
         python3 .github/scripts/compare_commit_id.py
+        echo $commit_id
 
     - name: Print commit ID to summary
       run: |
