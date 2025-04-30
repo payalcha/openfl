@@ -65,7 +65,7 @@ jobs:
         python3 -m pip install -r test-requirements.txt
         python3 -m pytest -s tests/end_to_end/test_suites/task_runner_tests.py \
         -m task_runner_basic --model_name "keras/mnist" \
-        --num_rounds 1 --num_collaborators 1
+        --num_rounds 1 --num_collaborators 2
         
     - name: Post test run
       if: ${{ always() }}
